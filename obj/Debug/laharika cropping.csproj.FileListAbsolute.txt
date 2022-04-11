@@ -1,0 +1,30 @@
+D:\others\Laharika\laharika_cropping\bin\Debug\laharika cropping.exe.config
+D:\others\Laharika\laharika_cropping\bin\Debug\laharika cropping.exe
+D:\others\Laharika\laharika_cropping\bin\Debug\laharika cropping.pdb
+D:\others\Laharika\laharika_cropping\bin\Debug\itextsharp.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\PdfSharp.Charting.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\PdfSharp.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Configuration.ConfigurationManager.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Security.AccessControl.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Security.Permissions.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Security.Principal.Windows.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\itextsharp.xml
+D:\others\Laharika\laharika_cropping\bin\Debug\PdfSharp.xml
+D:\others\Laharika\laharika_cropping\bin\Debug\PdfSharp.Charting.xml
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Configuration.ConfigurationManager.xml
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Security.AccessControl.xml
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Security.Permissions.xml
+D:\others\Laharika\laharika_cropping\bin\Debug\System.Security.Principal.Windows.xml
+D:\others\Laharika\laharika_cropping\bin\Debug\de\PdfSharp.resources.dll
+D:\others\Laharika\laharika_cropping\bin\Debug\de\PdfSharp.Charting.resources.dll
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika_2.Image_Settings.resources
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika_2.main.resources
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika_2.Properties.Resources.resources
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.csproj.GenerateResource.cache
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.csproj.CoreCompileInputs.cache
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.exe
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.pdb
+D:\others\Laharika\laharika_cropping\bin\Debug\laharika cropping.exe.manifest
+D:\others\Laharika\laharika_cropping\bin\Debug\laharika cropping.application
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.exe.manifest
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.application

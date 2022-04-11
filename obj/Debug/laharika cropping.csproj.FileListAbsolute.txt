@@ -28,3 +28,4 @@ D:\others\Laharika\laharika_cropping\bin\Debug\laharika cropping.exe.manifest
 D:\others\Laharika\laharika_cropping\bin\Debug\laharika cropping.application
 D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.exe.manifest
 D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.application
+D:\others\Laharika\laharika_cropping\obj\Debug\laharika cropping.csproj.CopyComplete

@@ -14,12 +14,18 @@ using System.Configuration;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.Threading;
+using Font = System.Drawing.Font;
+using static System.Net.Mime.MediaTypeNames;
+using Rectangle = iTextSharp.text.Rectangle;
 
 namespace laharika_2
 {
     public partial class main : Form
     {
         public static string key { get; set; }
+
+        int CustomPDF_height = 13;
+        int CustomPDF_width = 19;
 
         public string keyvalue()
         {
@@ -171,13 +177,17 @@ namespace laharika_2
                 encoderParameters.Param[0] = encoderParameter;
                 try
                 {
-                    a.Save(tmp, codecInfo, encoderParameters);
+                    tmp = lastFolderName + @"\SubFolder\" + number + "a" + ".jpg";
+                    CustomImageSize(a,tmp, studioName.Text + " : " +number + "a");
+                    //a.Save(tmp, codecInfo, encoderParameters);
                     tmp = lastFolderName + @"\SubFolder\" + number + "b" + ".jpg";
                     fileno++;
-                    b.Save(tmp, codecInfo, encoderParameters);
+                    CustomImageSize(b,tmp, studioName.Text + " : " + number + "b");
+                    //b.Save(tmp, codecInfo, encoderParameters);
                 }
-                catch
+                catch(Exception ex)
                 {
+                    MessageBox.Show(ex.Message.ToString());
                     MessageBox.Show("ERROR SAVING CROPPED IMAGES");
                     
                 }
@@ -290,7 +300,7 @@ namespace laharika_2
             {
 
                 iTextSharp.text.Image img = null;
-                    try
+                try
                 {
                     img = iTextSharp.text.Image.GetInstance(listdata[i]);
                     img.ScaleToFit(pagesize);
@@ -319,7 +329,6 @@ namespace laharika_2
             MessageBox.Show("PDF COMPLETED");
            
         }
-
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -432,5 +441,61 @@ namespace laharika_2
 
             return NewBitmap;
         }
+
+        private void CustomImageSize(Bitmap sourceImage,string savepath, string textvalue)
+        {
+            int height = CustomPDF_height;
+            int width = CustomPDF_width;
+
+            using (sourceImage)
+            {
+                int sourceWidth = sourceImage.Width;
+                int sourceHeight = sourceImage.Height;
+
+                int dpi = 300;
+                using (var pageImage = new Bitmap(width * dpi, height * dpi))
+                using (var graphics = Graphics.FromImage(pageImage))
+                {
+                    // Clear the page with white
+                    graphics.Clear(Color.White);
+
+                    // Calculate the position to center the source image on the page
+                    int x = (pageImage.Width - sourceWidth) / 2;
+                    int y = (pageImage.Height - sourceHeight) / 2;
+                    Pen pen = new Pen(Color.Black, 2);
+                    // Draw the source image onto the page
+                    graphics.DrawImage(sourceImage, x, y, sourceWidth, sourceHeight);
+
+                    graphics.DrawLine(pen, x,0 ,x, pageImage.Height);
+                    graphics.DrawLine(pen, sourceWidth+ x, 0, sourceWidth+x, pageImage.Height);
+                    // Add the file name text
+                    using (var font = new Font("Arial", 50))
+                    using (var brush = new SolidBrush(Color.Black))
+                    {
+                        SizeF textSize = graphics.MeasureString(textvalue, font);
+                        PointF textPosition = new PointF((pageImage.Width - textSize.Width) / 2, y + sourceHeight + 10);
+
+                        graphics.DrawString(textvalue, font, brush, textPosition);
+                    }
+
+                    pageImage.SetResolution(300, 300);
+
+                    // Save the resulting image
+                    
+                    EncoderParameters encoderParameters = new EncoderParameters(1);
+                    EncoderParameter encoderParameter = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
+
+                    encoderParameters.Param[0] = encoderParameter; 
+                    ImageCodecInfo codecInfo = ImageCodecInfo.GetImageDecoders().First(codec => codec.FormatID == ImageFormat.Jpeg.Guid);
+                    pageImage.Save(savepath, codecInfo, encoderParameters);
+                    
+                    //return pageImage;
+
+                    
+                }
+            }
+
+        }
+
     }
 }

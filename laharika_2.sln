@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30204.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "laharika cropping", "laharika cropping.csproj", "{6E0E80A3-DB77-4B4C-A05A-B0BE12DD84DF}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "laharika cropping", "laharika cropping\laharika cropping.vdproj", "{B9DFF9A7-100D-437F-B75A-479B396327BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{6E0E80A3-DB77-4B4C-A05A-B0BE12DD84DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E0E80A3-DB77-4B4C-A05A-B0BE12DD84DF}.Release|x86.ActiveCfg = Release|x86
 		{6E0E80A3-DB77-4B4C-A05A-B0BE12DD84DF}.Release|x86.Build.0 = Release|x86
-		{B9DFF9A7-100D-437F-B75A-479B396327BF}.Debug|Any CPU.ActiveCfg = Debug
-		{B9DFF9A7-100D-437F-B75A-479B396327BF}.Debug|x86.ActiveCfg = Debug
-		{B9DFF9A7-100D-437F-B75A-479B396327BF}.Release|Any CPU.ActiveCfg = Release
-		{B9DFF9A7-100D-437F-B75A-479B396327BF}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

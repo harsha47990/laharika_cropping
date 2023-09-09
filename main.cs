@@ -177,12 +177,18 @@ namespace laharika_2
                 encoderParameters.Param[0] = encoderParameter;
                 try
                 {
+                    var specials  = Path.GetFileNameWithoutExtension(listdata[k]).Split(' ');
+                    string add_special_value = String.Empty;
+                    if (specials.Length > 1)
+                    {
+                        add_special_value = specials[1];
+                    }
                     tmp = lastFolderName + @"\SubFolder\" + number + "a" + ".jpg";
-                    CustomImageSize(a,tmp, studioName.Text + " : " +number + "a");
+                    CustomImageSize(a,tmp, studioName.Text + " : " +number + "a " + add_special_value);
                     //a.Save(tmp, codecInfo, encoderParameters);
                     tmp = lastFolderName + @"\SubFolder\" + number + "b" + ".jpg";
                     fileno++;
-                    CustomImageSize(b,tmp, studioName.Text + " : " + number + "b");
+                    CustomImageSize(b,tmp, studioName.Text + " : " + number + "b " + add_special_value);
                     //b.Save(tmp, codecInfo, encoderParameters);
                 }
                 catch(Exception ex)
@@ -204,6 +210,7 @@ namespace laharika_2
         {
             
             btn_resizes();
+            studioName.Clear();
         }
         private void btn_resizes()
         {
@@ -466,8 +473,15 @@ namespace laharika_2
                     // Draw the source image onto the page
                     graphics.DrawImage(sourceImage, x, y, sourceWidth, sourceHeight);
 
+                    //verticle lines
                     graphics.DrawLine(pen, x,0 ,x, pageImage.Height);
                     graphics.DrawLine(pen, sourceWidth+ x, 0, sourceWidth+x, pageImage.Height);
+                    
+                    // horizontal lines
+
+                    graphics.DrawLine(pen, 0, y, pageImage.Width,y);
+                    graphics.DrawLine(pen,0, sourceHeight + y, pageImage.Width, sourceHeight + y);
+
                     // Add the file name text
                     using (var font = new Font("Arial", 50))
                     using (var brush = new SolidBrush(Color.Black))

@@ -27,6 +27,7 @@ namespace laharika_2
         int CustomPDF_height = 13;
         int CustomPDF_width = 19;
 
+        bool fb_select = false;
         public string keyvalue()
         {
             return key;
@@ -51,18 +52,15 @@ namespace laharika_2
             custombox.Visible = false;
             custombox2.Visible = false;
             X.Visible = false;
+            fb_combo_box.SelectedIndex = 0;
         }
       
         private void button1_Click(object sender, EventArgs e)
         {
             int chk = 0;
             k = 0;
-            
-            
-            if(rename_txt.Text =="")
-            {
-                fileno = 1;
-            }
+            fileno = 1;
+           
             listdata.Clear();
             problem.Clear();
             progressBar1.Value = 0;
@@ -96,11 +94,8 @@ namespace laharika_2
 
         }
 
-
         private void savefile(int x, int y)
         {
-
-
             string folderName = lastFolderName;
             string pathString = System.IO.Path.Combine(folderName, "SubFolder");
             try
@@ -112,8 +107,6 @@ namespace laharika_2
                 MessageBox.Show("ERROR CREATING FOLDER");
                 return;
             }
-
-
 
             Bitmap s = null;
             try
@@ -160,7 +153,7 @@ namespace laharika_2
             
             if (a.Width != x || a.Height != y)
             {   a = new Bitmap(a, new Size(x, y));
-            a.SetResolution(300, 300);
+                a.SetResolution(300, 300);
                 b = new Bitmap(b, new Size(x, y));
                 b.SetResolution(300, 300);
                 problem.Add((k+1));
@@ -183,9 +176,12 @@ namespace laharika_2
                     {
                         add_special_value = specials[1];
                     }
+
                     tmp = lastFolderName + @"\SubFolder\" + number + "a" + ".jpg";
                     CustomImageSize(a,tmp, studioName.Text + " : " +number + "a " + add_special_value);
                     //a.Save(tmp, codecInfo, encoderParameters);
+        
+
                     tmp = lastFolderName + @"\SubFolder\" + number + "b" + ".jpg";
                     fileno++;
                     CustomImageSize(b,tmp, studioName.Text + " : " + number + "b " + add_special_value);
@@ -267,7 +263,6 @@ namespace laharika_2
                 MessageBox.Show("THESE ARE AUTO RESIZED " + error);
             }
             MessageBox.Show("FILES SAVED");
-            rename_txt.Text = "";
         }
 
         private void btn_pdf_Click(object sender, EventArgs e)
@@ -354,26 +349,194 @@ namespace laharika_2
             { key = "close";}
         }
 
-        private void Rename_btn_Click(object sender, EventArgs e)
+        private void fb_combo_box_SelectedIndexChanged(object sender, EventArgs e)
         {
-            rename_txt.Visible = true;
-            ok_btn.Visible = true;
-            
-        }
-
-        private void ok_btn_Click(object sender, EventArgs e)
-        {
-            if (rename_txt.Text.ToString() != "")
+            if (fb_combo_box.SelectedItem.ToString() == "12X36")
             {
-                fileno = Convert.ToInt32(rename_txt.Text.ToString());
+                addfront_btn.Text = "Add File";
+                addback_btn.Enabled = false;
+                addback_btn.Visible = false;
             }
             else
-                fileno = 1;
+            {
+                addfront_btn.Text = "Front";
+                addback_btn.Text = "Back";
+                addback_btn.Enabled = true;
+                addback_btn.Visible = true;
+            }
+        }
 
-            MessageBox.Show("renamed saved");
-            rename_txt.Visible = false;
-            ok_btn.Visible = false;
+        private void addFront_btn_Click(object sender, EventArgs e)
+        {
+            listdata.Clear();
+            openimgfile = new OpenFileDialog();
+            openimgfile.Multiselect = true;
+            openimgfile.Filter = "image files(*.bmp,*.jpg,*.png)|*.bmp; *.jpg; *.png";
+            if (openimgfile.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string temp in openimgfile.FileNames)
+                {
+                    listdata.Add(temp);
 
+                    lastFolderName = Path.GetDirectoryName(temp);
+                }
+            }
+
+        }
+        private void addBack_btn_Click(object sender, EventArgs e)
+        {
+            openimgfile = new OpenFileDialog();
+            openimgfile.Multiselect = true;
+            openimgfile.Filter = "image files(*.bmp,*.jpg,*.png)|*.bmp; *.jpg; *.png";
+            if (openimgfile.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string temp in openimgfile.FileNames)
+                {
+                    listdata.Add(temp);
+                }
+            }
+        }
+        private void ok_btn_Click(object sender, EventArgs e)
+        {
+            fb_select = true;
+            int x = 5400;
+            int y = 3600;
+
+            if (fb_combo_box.SelectedItem.ToString() == "12X36")
+            {
+                string tmp = "";
+                string folderName = lastFolderName;
+                string pathString = System.IO.Path.Combine(folderName, "SubFolder");
+                try
+                {
+                    System.IO.Directory.CreateDirectory(pathString);
+                }
+                catch
+                {
+                    MessageBox.Show("ERROR CREATING FOLDER");
+                    return;
+                }
+
+                Bitmap s = null;
+                try
+                {
+                    s = new Bitmap(listdata[0]);
+                }
+                catch
+                {
+                    MessageBox.Show("ERROR OPENING FILE or FILE CORRUPTED\n File Name: -  " + Path.GetFileName(listdata[k]));
+                    return;
+                }
+                if (s.Width < s.Height)
+                {
+                    s.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                }
+                ////////////////
+                   
+
+                Bitmap a = s.Clone(new System.Drawing.Rectangle(0, 0, s.Width / 2, s.Height), s.PixelFormat);
+                Bitmap b = s.Clone(new System.Drawing.Rectangle(s.Width / 2, 0, s.Width / 2, s.Height), s.PixelFormat);
+              
+                if (a.Width != x || a.Height != y)
+                {
+                    a = new Bitmap(a, new Size(x, y));
+                    a.SetResolution(300, 300);
+                    b = new Bitmap(b, new Size(x, y));
+                    b.SetResolution(300, 300);
+                    problem.Add((k + 1));
+
+                }
+                using (EncoderParameters encoderParameters = new EncoderParameters(1))
+                using (EncoderParameter encoderParameter = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L))
+                {
+                    ImageCodecInfo codecInfo = ImageCodecInfo.GetImageDecoders().First(codec => codec.FormatID == ImageFormat.Jpeg.Guid);
+                    encoderParameters.Param[0] = encoderParameter;
+                    try
+                    {
+                        string add_special_value = "FRONT";
+                        tmp = lastFolderName + @"\SubFolder\" + "00front.jpg";
+                        CustomImageSize(a, tmp, studioName.Text + " : " + add_special_value);
+                        add_special_value = "BACK"; 
+                        tmp = lastFolderName + @"\SubFolder\" + "back.jpg";
+                        fileno++;
+                        CustomImageSize(b, tmp, studioName.Text + " : " + add_special_value);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                        MessageBox.Show("ERROR SAVING CROPPED IMAGES");
+
+                    }
+                }
+                a.Dispose();
+                b.Dispose();
+                s.Dispose();
+                // GC.Collect();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                
+
+            }
+            else
+            {
+                Bitmap a = new Bitmap(listdata[0]);
+                Bitmap b = new Bitmap(listdata[1]);
+                string folderName = lastFolderName;
+                string pathString = System.IO.Path.Combine(folderName, "SubFolder");
+                try
+                {
+                    System.IO.Directory.CreateDirectory(pathString);
+                }
+                catch
+                {
+                    MessageBox.Show("ERROR CREATING FOLDER");
+                    return;
+                }
+
+                string tmp = "";
+
+                if (a.Width != x || a.Height != y)
+                {
+                    a = new Bitmap(a, new Size(x, y));
+                    a.SetResolution(300, 300);
+                    b = new Bitmap(b, new Size(x, y));
+                    b.SetResolution(300, 300);
+                    problem.Add((k + 1));
+
+                }
+
+                using (EncoderParameters encoderParameters = new EncoderParameters(1))
+                using (EncoderParameter encoderParameter = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L))
+                {
+                    ImageCodecInfo codecInfo = ImageCodecInfo.GetImageDecoders().First(codec => codec.FormatID == ImageFormat.Jpeg.Guid);
+                    encoderParameters.Param[0] = encoderParameter;
+                    try
+                    {
+                        string add_special_value = String.Empty;
+                        add_special_value = "FRONT"; 
+
+                        tmp = lastFolderName + @"\SubFolder\" + "00front.jpg";
+                        CustomImageSize(a, tmp, studioName.Text + " : " + add_special_value);
+
+                        add_special_value = "BACK"; 
+                        tmp = lastFolderName + @"\SubFolder\" + "back.jpg";
+                        fileno++;
+                        CustomImageSize(b, tmp, studioName.Text + " : " + add_special_value);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                        MessageBox.Show("ERROR SAVING CROPPED IMAGES");
+
+                    }
+                }
+                a.Dispose();
+                b.Dispose();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                listdata.Clear();
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -511,5 +674,6 @@ namespace laharika_2
 
         }
 
+      
     }
 }
